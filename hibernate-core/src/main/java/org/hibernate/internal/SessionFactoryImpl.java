@@ -279,13 +279,6 @@ public final class SessionFactoryImpl
 		this.typeResolver = cfg.getTypeResolver().scope( this );
 		this.typeHelper = new TypeLocatorImpl( typeResolver );
 
-		this.filters = new HashMap<String, FilterDefinition>();
-		this.filters.putAll( cfg.getFilterDefinitions() );
-
-		LOG.debugf( "Session factory constructed with filter configurations : %s", filters );
-		LOG.debugf( "Instantiating session factory with properties: %s", properties );
-
-
 		this.queryPlanCache = new QueryPlanCache( this );
 
 		// todo : everything above here consider implementing as standard SF service.  specifically: stats, caches, types, function-reg
@@ -312,6 +305,12 @@ public final class SessionFactoryImpl
 			integrator.integrate( cfg, this, this.serviceRegistry );
 			integratorObserver.integrators.add( integrator );
 		}
+	
+		this.filters = new HashMap<String, FilterDefinition>();
+		this.filters.putAll( cfg.getFilterDefinitions() );
+
+		LOG.debugf( "Session factory constructed with filter configurations : %s", filters );
+		LOG.debugf( "Instantiating session factory with properties: %s", properties );
 
 		//Generators:
 
